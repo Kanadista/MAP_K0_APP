@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class UserRatingLocationDTO (
-    @Json(name = "idUser") val idUser: Int?,
+    @Json(name = "idUser") val idUser: String?,
     @Json(name = "idLocation") val idLocation: Int?,
     @Json(name = "stars") val stars: Int?,
     @Json(name = "comment") val comment: String?

@@ -5,5 +5,5 @@ data class EventBO (
     val id: Int,
     val name: String,
     val description: String,
-    val creatorId: Int
+    val creatorId: String
     )

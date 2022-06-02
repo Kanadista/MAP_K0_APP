@@ -9,6 +9,6 @@ class UserSavedLocationsDataSourceImpl : UserSavedLocationsRemoteDataSource {
     private val mapK0APIService : MapK0APIService = MapK0APIService.getAPIService()
     override suspend fun getRemoteUserSavedLocationsSource(): List<UserSavedLocationsBO> {
         val userSavedLocationCall = mapK0APIService.getAllUserSavedLocations()
-        return if(userSavedLocationCall.isSuccessful) userSavedLocationCall.body()?.userSavedLocationsList?.map {it.toBO()} ?: emptyList() else emptyList()
+        return if(userSavedLocationCall.isSuccessful) userSavedLocationCall.body()?.map {it.toBO()} ?: emptyList() else emptyList()
     }
 }

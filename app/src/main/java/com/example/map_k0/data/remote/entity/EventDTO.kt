@@ -9,5 +9,5 @@ data class EventDTO (
      @Json(name = "id") val id: Int?,
      @Json(name = "name") val name: String?,
      @Json(name = "description") val description: String?,
-     @Json(name = "creatorId") val creatorId: Int?
+     @Json(name = "creatorId") val creatorId: String?
 )

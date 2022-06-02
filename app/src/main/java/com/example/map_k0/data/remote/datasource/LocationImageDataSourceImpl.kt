@@ -9,6 +9,6 @@ class LocationImageDataSourceImpl : LocationImageRemoteDataSource {
     private val mapK0APIService : MapK0APIService = MapK0APIService.getAPIService()
     override suspend fun getRemoteLocationImageDataSource(): List<LocationImageBO> {
         val locationImageCall = mapK0APIService.getAllLocationImage()
-        return if(locationImageCall.isSuccessful) locationImageCall.body()?.locationImageList?.map {it.toBO()} ?: emptyList() else emptyList()
+        return if(locationImageCall.isSuccessful) locationImageCall.body()?.map {it.toBO()} ?: emptyList() else emptyList()
     }
 }

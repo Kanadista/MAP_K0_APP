@@ -10,6 +10,6 @@ class UserRemoteDataSourceImpl : UserRemoteDataSource {
 
     override suspend fun getRemoteUsers(): List<UserBO> {
         val userCall = mapK0APIService.getAllUsers()
-        return if(userCall.isSuccessful) userCall.body()?.userList?.map {it.toBO()} ?: emptyList() else emptyList()
+        return if(userCall.isSuccessful) userCall.body()?.map {it.toBO()} ?: emptyList() else emptyList()
     }
 }

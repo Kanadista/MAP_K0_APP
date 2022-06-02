@@ -11,7 +11,7 @@ data class LocationDTO (
     @Json(name = "description") val description : String?,
     @Json(name = "latitud") val latitude : Double?,
     @Json(name = "longitude") val longitude : Double?,
-    @Json(name = "creatorId") val creatorId : Int?
+    @Json(name = "creatorId") val creatorId : String?
 ) {
 
 }

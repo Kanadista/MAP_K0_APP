@@ -7,5 +7,7 @@ import com.example.map_k0.domain.entities.LocationBO
 interface LocationRemoteDataSource {
     suspend fun getRemoteLocations(): List<LocationBO>
 
-    suspend fun getRemoteLocationById(id: Int): LocationBO?
+    suspend fun getRemoteLocationById(id: Int): LocationBO
+
+    suspend fun createLocation(location: LocationBO)
 }

@@ -6,5 +6,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class EventAssistanceDTO (
     @Json(name = "idEvent") val idEvent: Int?,
-    @Json(name = "idUser") val idUser: Int?
+    @Json(name = "idUser") val idUser: String?
 )

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.map_k0.R
 import com.example.map_k0.domain.entities.LocationBO
 import com.example.map_k0.ui.viewmodel.MapVM
@@ -44,23 +45,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
-        //createFragment()
         return inflater.inflate(R.layout.fragment_map, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupMap(childFragmentManager, this@MapFragment)
     }
-/*
-    private fun createFragment(){
-        val mapFragment: SupportMapFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-    }
-*/
+
     override fun onMapReady(mapaCreado: GoogleMap) {
 
         mapaCreado.apply{
@@ -89,7 +81,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         .position(LatLng(locationBO.latitude, locationBO.longitude))
                         .title(locationBO.name)
                 )
+                setOnMarkerClickListener {
+                    findNavController().navigate(MapFragmentDirections.actionMapFragmentToDetailDialogFragment(locationBO.id))
+                    true
+                }
             }
+
 
         }
     }
@@ -97,7 +94,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun setupObservers(googleMap: GoogleMap){
         viewModel.locationList.observe(viewLifecycleOwner) { onMapListChange(it, googleMap, viewModel)}
     }
-
 
     companion object {
         /**

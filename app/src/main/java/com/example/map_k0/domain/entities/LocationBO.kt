@@ -6,5 +6,5 @@ data class LocationBO(
     val description : String,
     val latitude : Double,
     val longitude : Double,
-    var creatorId : Int
+    var creatorId : String
 )

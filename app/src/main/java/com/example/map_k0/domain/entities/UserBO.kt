@@ -3,7 +3,7 @@ package com.example.map_k0.domain.entities
 import com.squareup.moshi.Json
 
 data class UserBO(
-    val id: Int,
+    val id: String,
     val nickName: String,
     val firstName: String,
     val lastName: String,
