@@ -3,7 +3,14 @@ package com.example.map_k0.ui.view.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.ActionBar
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.example.map_k0.R
+import com.example.map_k0.databinding.ActivityMainBinding
+import com.example.map_k0.ui.view.base.BaseActivity
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -11,36 +18,31 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity(), OnMapReadyCallback {
+class MainActivity : BaseActivity(){
 
-    private lateinit var map: GoogleMap
+    private var binding: ActivityMainBinding? = null
+    private val navController by lazy { getActivityNavController() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        //val intent = Intent(this, AuthActivity::class.java)
-        //startActivity(intent)
-        //createFragment()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
     }
 
-    private fun createFragment(){
-        val mapFragment:SupportMapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+   override fun onSupportNavigateUp(): Boolean {
+        return NavigationUI.navigateUp(navController, binding?.root)
+                || super.onSupportNavigateUp()
     }
 
-    override fun onMapReady(mapaCreado: GoogleMap) {
-        mapaCreado.apply{
-           // setMapStyle(MapStyleOptions.loadRawResourceStyle(this@MainActivity, R.raw.map_style));
-            GoogleMapOptions().mapId("6c92c2dd989894a2");
-            val coordenadas = LatLng(37.37410286896958, -5.969290673333865)
-            addMarker(
-                MarkerOptions()
-                    .position(coordenadas)
-                    .title("IES NERVION")
-            )
-        }
-        map = mapaCreado
-    }
+    override fun getActionBarBase(): ActionBar? = supportActionBar
+
+    override fun getNavDrawer() : NavigationView? = binding?.activityMainDrawerStart
+
+    override fun getDrawerLayout() : DrawerLayout? = binding?.root
+
+    private fun getActivityNavController(): NavController =
+        (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+
 }

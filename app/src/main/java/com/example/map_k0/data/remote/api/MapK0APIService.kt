@@ -78,7 +78,7 @@ interface MapK0APIService {
     suspend fun getUserRatingLocationById(@Path("idLocation") idLocation: Int) : Response<List<UserRatingLocationDTO>>
 
     @POST("UserRatingLocation")
-    suspend fun createUserRatingLocation(@Body userRatingLocationDTO: UserRatingLocationDTO)
+    suspend fun createUserRatingLocation(@Body userRatingLocationDTO: UserRatingLocationDTO) : Response<Int>
     //endregion
 
     //region User_Saved_Locations
@@ -143,7 +143,7 @@ interface MapK0APIService {
         }
 
 
-        private const val MAPK0_API_BASE_URL = "https://localhost:3001/api/"
+        private const val MAPK0_API_BASE_URL = "https://mapk0api.azurewebsites.net/api/"
 
         fun getAPIService(): MapK0APIService =
             getRetrofit().create(MapK0APIService::class.java)
@@ -152,7 +152,7 @@ interface MapK0APIService {
             Retrofit.Builder()
                 .baseUrl(MAPK0_API_BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
-                .client(getUnsafeOkHttpClient())
+                //.client(getUnsafeOkHttpClient())
                 .build()
     }
 

@@ -4,4 +4,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="comentario">Comenta algo</string>
+    <string name="comentar">Comentar</string>
+    <string name="menu_drawer_map">Mapa</string>
+    <string name="menu_drawer_events">Eventos</string>
+    <string name="menu_drawer_auth">Autentificacion</string>
+    <string name="add_title">Titulo</string>
+    <string name="add_description">Añade una descripción de la localización</string>
+    <string name="add_button_text">Añadir</string>
 </resources>

@@ -25,6 +25,7 @@ class DetailDialogFragmentVM : ViewModel() {
 
     val locationWithRating = MutableLiveData<LocationWithRatings>()
 
+    val ratings = MutableLiveData<List<UserRatingLocationBO>>()
 
     private val locationRepository = LocationRepository(LocationRemoteDataSourceImpl(), userRatingLocationRepository)
 
@@ -38,10 +39,16 @@ class DetailDialogFragmentVM : ViewModel() {
         }
     }
 
-    fun createUserRatingLocation(userRatingLocationBO: UserRatingLocationBO){
+    fun getRatings(id: Int) {
         viewModelScope.launch(Dispatchers.IO) { //Dispatchers.IO se usa para llamada largas o API
-            createUserRatingLocationUseCase.invoke(userRatingLocationBO)
+            ratings.postValue(getLocationWithRatingUseCase.invoke(id).ratings)
         }
+
     }
 
-}
+    fun createUserRatingLocation(userRatingLocationBO: UserRatingLocationBO) {
+            viewModelScope.launch(Dispatchers.IO) { //Dispatchers.IO se usa para llamada largas o API
+                createUserRatingLocationUseCase.invoke(userRatingLocationBO)
+            }
+        }
+    }
