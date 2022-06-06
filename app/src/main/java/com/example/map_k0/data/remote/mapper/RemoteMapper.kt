@@ -1,8 +1,13 @@
 package com.example.map_k0.data.remote.mapper
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import com.example.map_k0.data.remote.entity.*
 import com.example.map_k0.domain.entities.*
-import com.example.map_k0.ui.model.LocationWithRatings
+import com.example.map_k0.ui.model.LocationWithRatingsAndImage
+import java.io.ByteArrayOutputStream
+import java.util.*
 
 
 //MAPPER FOR EVENTS
@@ -10,14 +15,20 @@ fun EventDTO.toBO(): EventBO = EventBO(
     id ?: -1,
     name ?: "",
     description ?: "",
-    creatorId ?: "-1"
+    address ?: "",
+    type ?: -1,
+    creatorId ?: "-1",
+    date = date
 )
 
 fun EventBO.toDTO(): EventDTO = EventDTO(
     id,
     name,
     description,
-    creatorId
+    address,
+    type,
+    creatorId,
+    date
 )
 //MAPPER FOR EVENT ASSISTANCE
 fun EventAssistanceDTO.toBO(): EventAssistanceBO = EventAssistanceBO(
@@ -49,20 +60,30 @@ fun LocationBO.toDTO(): LocationDTO = LocationDTO(
     creatorId
 )
 
-fun LocationBO.toLocationWithRatings(userRatingLocationBO: List<UserRatingLocationBO>) : LocationWithRatings = LocationWithRatings(
+fun LocationBO.toLocationWithRatingsAndImage(userRatingLocationBO: List<UserRatingLocationBO>, locationImageBO: List<LocationImageBO>) : LocationWithRatingsAndImage = LocationWithRatingsAndImage(
     id,
     name,
     description,
     latitude,
     longitude,
     creatorId,
-    userRatingLocationBO
+    userRatingLocationBO,
+    locationImageBO
 )
 
 //MAPPER FOR LOCATION IMAGE
-fun LocationImageDTO.toBO(): LocationImageBO = LocationImageBO(
+fun LocationImageRecievingDTO.toBO(): LocationImageBO = LocationImageBO(
+    idLocationImage ?: -1,
     idLocation ?: -1,
-    (image ?: null)!!
+    image = stringToBitMap(image)
+    //image ?:
+)
+
+fun LocationImageBO.toDTO(): LocationImageSendingDTO = LocationImageSendingDTO(
+    idLocationImage ?: -1,
+    idLocation ?: -1,
+    image = bitMapToString(image)
+    //image ?:
 )
 
 //MAPPER FOR USERS
@@ -100,3 +121,14 @@ fun UserSavedLocationsDTO.toBO(): UserSavedLocationsBO = UserSavedLocationsBO(
     idUser ?:  "-1",
     idLocation ?: -1
 )
+
+fun stringToBitMap(string: String): Bitmap {
+    val decodedString: ByteArray = Base64.decode(string, Base64.DEFAULT)
+    return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+}
+
+fun bitMapToString(bitmap: Bitmap): ByteArray {
+    val stream = ByteArrayOutputStream()
+     bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
+    return stream.toByteArray()
+}

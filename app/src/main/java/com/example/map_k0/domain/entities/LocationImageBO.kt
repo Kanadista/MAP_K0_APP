@@ -1,8 +1,9 @@
 package com.example.map_k0.domain.entities
 
-import com.squareup.moshi.Json
+import android.graphics.Bitmap
 
 data class LocationImageBO(
-     val idLocation: Int,
-     val image: ByteArray,
+    val idLocationImage: Int = 0,
+    val idLocation: Int,
+    val image: Bitmap,
 )

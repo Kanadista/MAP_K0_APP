@@ -9,5 +9,7 @@ interface LocationRemoteDataSource {
 
     suspend fun getRemoteLocationById(id: Int): LocationBO
 
+    suspend fun getLastLocationCreatedByUser(id: String): LocationBO
+
     suspend fun createLocation(location: LocationBO)
 }

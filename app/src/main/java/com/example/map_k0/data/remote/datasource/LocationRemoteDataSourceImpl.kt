@@ -23,6 +23,12 @@ class LocationRemoteDataSourceImpl : LocationRemoteDataSource {
                 else LocationBO(-1, "","",0.0,0.0,"-1")
          }
 
+    override suspend fun getLastLocationCreatedByUser(id: String): LocationBO {
+        val locationCall = mapK0APIService.getLastLocationCreatedByUser(id)
+        return if (locationCall.isSuccessful) locationCall.body()?.toBO() ?: LocationBO(-1, "","",0.0,0.0,"-1")
+        else LocationBO(-1, "","",0.0,0.0,"-1")
+    }
+
     override suspend fun createLocation(location: LocationBO){
         mapK0APIService.createLocation(location.toDTO())
     }

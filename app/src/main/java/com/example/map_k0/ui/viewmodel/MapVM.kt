@@ -7,7 +7,9 @@ import com.example.map_k0.data.repository.LocationRepository
 import com.example.map_k0.domain.entities.LocationBO
 import com.example.map_k0.usecases.get.GetAllLocationsUseCase
 import androidx.lifecycle.viewModelScope
+import com.example.map_k0.data.remote.datasource.LocationImageDataSourceImpl
 import com.example.map_k0.data.remote.datasource.UserRatingLocationDataSourceImpl
+import com.example.map_k0.data.repository.LocationImageRepository
 import com.example.map_k0.data.repository.UserRatingLocationRepository
 import com.example.map_k0.usecases.get.GetLocationByIdUseCase
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +19,11 @@ class MapVM: ViewModel() {
 
     private val userRatingLocationRepository = UserRatingLocationRepository(UserRatingLocationDataSourceImpl())
 
-    private val locationRepository = LocationRepository(LocationRemoteDataSourceImpl(), userRatingLocationRepository)
+    private val locationImageLocationRepository = LocationImageRepository(
+        LocationImageDataSourceImpl()
+    )
+
+    private val locationRepository = LocationRepository(LocationRemoteDataSourceImpl(), userRatingLocationRepository, locationImageLocationRepository)
 
     private val getAllLocations = GetAllLocationsUseCase(locationRepository)
 

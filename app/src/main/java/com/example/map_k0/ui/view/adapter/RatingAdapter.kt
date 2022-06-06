@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.map_k0.R
 import com.example.map_k0.databinding.RatingLocationRowBinding
 import com.example.map_k0.domain.entities.UserRatingLocationBO
-import com.example.map_k0.ui.model.LocationWithRatings
 
 class RatingAdapter() : ListAdapter<UserRatingLocationBO, RatingViewHolder>(DiffUtilCallBack) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatingViewHolder {

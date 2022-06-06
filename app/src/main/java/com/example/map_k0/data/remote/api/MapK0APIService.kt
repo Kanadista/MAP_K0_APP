@@ -2,6 +2,8 @@ package com.example.map_k0.data.remote.api
 
 import com.example.map_k0.data.remote.entity.*
 import com.example.map_k0.data.remote.entity.lists.*
+import com.example.map_k0.data.remote.mapper.CustomDateAdapter
+import com.squareup.moshi.Moshi
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -26,6 +28,9 @@ interface MapK0APIService {
 
     @GET("Locations/{id}")
     suspend fun getLocationById(@Path("id") id: Int) : Response<LocationDTO>
+
+    @GET("LocationUser/{id}")
+    suspend fun getLastLocationCreatedByUser(@Path("id") id: String) : Response<LocationDTO>
 
     @POST("Locations")
     suspend fun createLocation(@Body location: LocationDTO)
@@ -65,11 +70,11 @@ interface MapK0APIService {
 
     //region Location_Image
 
-    @GET("LocationImage")
-    suspend fun getAllLocationImage() : Response<List<LocationImageDTO>>
+    @GET("LocationImages/{id}")
+    suspend fun getAllLocationImage(@Path("id") id: Int) : Response<List<LocationImageRecievingDTO>>
 
-    @GET("LocationImage/{id}")
-    suspend fun  getLocationImageById(@Path("id") idLocation: Int) : Response<LocationImageDTO>
+    @POST("LocationImages")
+    suspend fun createLocationImage(@Body locationImageDTO: LocationImageSendingDTO) : Response<Int>
 
     //endregion
 
@@ -148,10 +153,12 @@ interface MapK0APIService {
         fun getAPIService(): MapK0APIService =
             getRetrofit().create(MapK0APIService::class.java)
 
+        private val moshiBuilder = Moshi.Builder().add(CustomDateAdapter())
+
         private fun getRetrofit(): Retrofit =
             Retrofit.Builder()
                 .baseUrl(MAPK0_API_BASE_URL)
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create(moshiBuilder.build()))
                 //.client(getUnsafeOkHttpClient())
                 .build()
     }

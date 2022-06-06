@@ -2,21 +2,19 @@ package com.example.map_k0.ui.fragment
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.location.Location
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.example.map_k0.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.map_k0.databinding.LocationDetailsBinding
 import com.example.map_k0.domain.entities.UserRatingLocationBO
-import com.example.map_k0.ui.model.LocationWithRatings
+import com.example.map_k0.ui.model.LocationWithRatingsAndImage
+import com.example.map_k0.ui.view.adapter.LocationImageAdapter
 import com.example.map_k0.ui.view.adapter.RatingAdapter
 import com.example.map_k0.ui.viewmodel.DetailDialogFragmentVM
-import com.example.map_k0.ui.viewmodel.MapVM
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 
@@ -26,8 +24,9 @@ class DetailDialogFragment : DialogFragment() {
     private var binding: LocationDetailsBinding? = null
     private val args: DetailDialogFragmentArgs by navArgs()
     private val viewModel: DetailDialogFragmentVM by viewModels()
-    private var locationWithRatings: LocationWithRatings? = null
+    private var locationWithRatingsAndImage: LocationWithRatingsAndImage? = null
     private val adapter by lazy { RatingAdapter() }
+    private lateinit var imageAdapter : LocationImageAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +34,7 @@ class DetailDialogFragment : DialogFragment() {
     ): View? {
         binding?.apply {
             detailSendButton.setOnClickListener {
-                if (locationWithRatings != null) {
+                if (locationWithRatingsAndImage != null) {
                     if(FirebaseAuth.getInstance().currentUser != null){
                     val userRatingLocationBO = UserRatingLocationBO(
                         "mxw0EfNic8MNRJ8JNHsmSdScNwT4", args.locationId,
@@ -62,9 +61,7 @@ class DetailDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.locationWithRating.observe(viewLifecycleOwner) {
-            binding?.onLocationChanged(
-                it
-            )
+            binding?.onLocationChanged(it)
         }
 
         viewModel.ratings.observe(viewLifecycleOwner){
@@ -81,16 +78,22 @@ class DetailDialogFragment : DialogFragment() {
         return MaterialAlertDialogBuilder(requireActivity()).setView(binding?.root).create()
     }
 
-    private fun LocationDetailsBinding.onLocationChanged(locationWithRating: LocationWithRatings) {
-        locationWithRatings = locationWithRating
+    private fun LocationDetailsBinding.onLocationChanged(locationWithRating: LocationWithRatingsAndImage) {
+        locationWithRatingsAndImage = locationWithRating
         detailTitle.text = locationWithRating.name
         detailDescription.text = locationWithRating.description
         if (locationWithRating.ratings.isNotEmpty()) {
             detailRating.rating = (locationWithRating.ratings.sumOf { it.stars } / locationWithRating.ratings.size).toFloat()
         }
         detailRecycler.adapter = adapter
-        //detailRecycler.addItemDecoration(DividerItemDecoration(context, 1))
+        detailRecycler.addItemDecoration(DividerItemDecoration(context, 1))
         adapter.submitList(locationWithRating.ratings)
+        imageAdapter = LocationImageAdapter(locationWithRatingsAndImage!!.images)
+        val manager = LinearLayoutManager(view!!.context, LinearLayoutManager.HORIZONTAL, false)
+        val recyclerView = binding!!.detailImage
+        recyclerView.layoutManager = manager
+        recyclerView.adapter = imageAdapter
+        imageAdapter.notifyDataSetChanged()
     }
 
     private fun showUnloggedAlert(){

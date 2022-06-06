@@ -7,10 +7,16 @@
         <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/activity_auth.xml" value="0.20520833333333333" />
         <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/auth_layout.xml" value="0.20520833333333333" />
+        <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/event_recycler_type_activism.xml" value="0.3500905797101449" />
+        <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/event_recycler_type_benefic.xml" value="0.3500905797101449" />
+        <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/event_recycler_type_cultural.xml" value="0.3500905797101449" />
+        <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/event_recycler_type_sport.xml" value="0.3500905797101449" />
         <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/fragment_add_location.xml" value="0.190625" />
         <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/fragment_auth.xml" value="0.2046875" />
+        <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/fragment_event_list.xml" value="0.3500905797101449" />
         <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/fragment_events.xml" value="0.2046875" />
         <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/fragment_map.xml" value="0.2046875" />
+        <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/image_recycler.xml" value="0.3596014492753623" />
         <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/location_details.xml" value="0.1" />
         <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/locations_details.xml" value="0.2015625" />
         <entry key="..\:/Programacion-GitHub/MAP_K0_APP/app/src/main/res/layout/rating_location_row.xml" value="0.2046875" />
