@@ -19,15 +19,13 @@ import kotlinx.coroutines.launch
 
 class AddLocationVM : ViewModel() {
 
-    private val userRatingLocationRepository = UserRatingLocationRepository(
-        UserRatingLocationDataSourceImpl()
-    )
+    private val userRatingLocationRepository = UserRatingLocationRepository(UserRatingLocationDataSourceImpl())
 
-    private val locationImageLocationRepository = LocationImageRepository(
-        LocationImageDataSourceImpl()
-    )
+    private val locationImageLocationRepository = LocationImageRepository(LocationImageDataSourceImpl())
 
     private val locationImageRepository = LocationImageRepository(LocationImageDataSourceImpl())
+
+    val created = MutableLiveData(false)
 
     val lastLocation = MutableLiveData<LocationBO>()
 
@@ -49,6 +47,7 @@ class AddLocationVM : ViewModel() {
     fun createLocationImage(locationImage: LocationImageBO){
         viewModelScope.launch(Dispatchers.IO) { //Dispatchers.IO se usa para llamada largas o API
             createLocationImageUseCase.invoke(locationImage)
+            created.postValue(true)
         }
     }
 }

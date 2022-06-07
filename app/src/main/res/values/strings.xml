@@ -11,4 +11,18 @@
     <string name="add_title">Titulo</string>
     <string name="add_description">Añade una descripción de la localización</string>
     <string name="add_button_text">Añadir</string>
+    <string name="Dirección">Dirección</string>
+    <string name="add_event">Añadir</string>
+    <string name="password">Contraseña</string>
+    <string name="correo">Correo</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="iniciar_sesion">Iniciar sesion</string>
+    <string name="button_help">Help button</string>
+    <string name="tutorial_image">Tutorial enseñando como crear una localización</string>
+    <string name="welcome">¡Bienvenido a Map K0!</string>
+    <string name="help_description">Una aplicación destinada a potenciar la convencia vecinal en los barrios ofreciendo la posibilidad de recopilar los intereses del mismo en una sola aplicación.</string>
+    <string name="help_tutorial">Podrás crear una localización dejando pulsado en una parte del mapa.</string>
+    <string name="help_reminder">Recuerda que deberás registrarte para poder crear localizaciones.</string>
 </resources>

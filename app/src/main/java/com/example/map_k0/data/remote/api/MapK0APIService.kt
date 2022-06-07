@@ -44,6 +44,8 @@ interface MapK0APIService {
     @GET("Events/{id}")
     suspend fun getEventById(): Response<EventDTO>
 
+    @POST("Events")
+    suspend fun createEvent(@Body eventDTO: EventDTO)
     //endregion
 
     //region Users
@@ -64,7 +66,7 @@ interface MapK0APIService {
     suspend fun  getEventAssistanceById(@Path("id") id: Int) : Response<EventAssistanceDTO>
 
     @POST("EventAssistance")
-    suspend fun createEventAssistance(@Body eventAssistanceDTO: EventAssistanceDTO)
+    suspend fun createEventAssistance(@Body eventAssistanceDTO: EventAssistanceDTO) : Response<Int>
 
     //endregion
 
@@ -89,6 +91,12 @@ interface MapK0APIService {
     //region User_Saved_Locations
     @GET("UserSavedLocations")
     suspend fun getAllUserSavedLocations() : Response<List<UserSavedLocationsDTO>>
+
+    @GET("UserSavedLocations/{idUser}")
+    suspend fun getAllUserSavedLocationsByUserId(@Path("idUser") idUser: String) : Response<List<UserSavedLocationsDTO>>
+
+    @POST("UserSavedLocations")
+    suspend fun createUserSavingLocation(@Body userSavedLocationDTO: UserSavedLocationsDTO)
 
     //endregion
 
@@ -159,7 +167,7 @@ interface MapK0APIService {
             Retrofit.Builder()
                 .baseUrl(MAPK0_API_BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create(moshiBuilder.build()))
-                //.client(getUnsafeOkHttpClient())
+               // .client(getUnsafeOkHttpClient())
                 .build()
     }
 

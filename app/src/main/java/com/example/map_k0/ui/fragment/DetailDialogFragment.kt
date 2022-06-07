@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.map_k0.databinding.LocationDetailsBinding
 import com.example.map_k0.domain.entities.UserRatingLocationBO
+import com.example.map_k0.domain.entities.UserSavedLocationsBO
 import com.example.map_k0.ui.model.LocationWithRatingsAndImage
 import com.example.map_k0.ui.view.adapter.LocationImageAdapter
 import com.example.map_k0.ui.view.adapter.RatingAdapter
@@ -25,6 +26,7 @@ class DetailDialogFragment : DialogFragment() {
     private val args: DetailDialogFragmentArgs by navArgs()
     private val viewModel: DetailDialogFragmentVM by viewModels()
     private var locationWithRatingsAndImage: LocationWithRatingsAndImage? = null
+    private var savedList : List<UserSavedLocationsBO>? = null
     private val adapter by lazy { RatingAdapter() }
     private lateinit var imageAdapter : LocationImageAdapter
 
@@ -33,11 +35,21 @@ class DetailDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding?.apply {
+
+            viewModel.userSavedLocations.observe(viewLifecycleOwner){
+                savedList = it
+            }
+
+            if(FirebaseAuth.getInstance().currentUser != null){
+                viewModel.getUserSavedLocationsByUserId(FirebaseAuth.getInstance().uid.toString())
+            }
+
+
             detailSendButton.setOnClickListener {
                 if (locationWithRatingsAndImage != null) {
                     if(FirebaseAuth.getInstance().currentUser != null){
                     val userRatingLocationBO = UserRatingLocationBO(
-                        "mxw0EfNic8MNRJ8JNHsmSdScNwT4", args.locationId,
+                        FirebaseAuth.getInstance().uid.toString(), args.locationId,
                         detailRating.rating.toInt(), detailComment.text.toString()
                     )
                         if(detailComment.text.toString() == ""){
@@ -49,8 +61,26 @@ class DetailDialogFragment : DialogFragment() {
                         }
 
                      }else {
-                        showUnloggedAlert()
+                        showUnloggedAddAlert()
                     }
+                }
+            }
+
+            saveButton.setOnClickListener{
+                if(FirebaseAuth.getInstance().currentUser != null) {
+                    if(savedList?.any{ it.idLocation == args.locationId}!!){
+                        showAlreadySavedAlert()
+                    }else {
+                        viewModel.createUserSavingLocation(
+                            UserSavedLocationsBO(
+                                FirebaseAuth.getInstance().uid.toString(),
+                                args.locationId
+                            )
+                        )
+                        showLocationSavedAlert()
+                    }
+                }else{
+                    showUnloggedSaveAlert()
                 }
             }
         }
@@ -96,10 +126,38 @@ class DetailDialogFragment : DialogFragment() {
         imageAdapter.notifyDataSetChanged()
     }
 
-    private fun showUnloggedAlert(){
+    private fun showUnloggedAddAlert(){
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Error")
         builder.setMessage("Necesitas iniciar sesión para comentar una localización.")
+        builder.setPositiveButton("Aceptar", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun showUnloggedSaveAlert(){
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Error")
+        builder.setMessage("Necesitas iniciar sesión para guardar una localización.")
+        builder.setPositiveButton("Aceptar", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun showAlreadySavedAlert(){
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Error")
+        builder.setMessage("Esa localización ya ha sido guardada.")
+        builder.setPositiveButton("Aceptar", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+
+    private fun showLocationSavedAlert(){
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Tarea completada")
+        builder.setMessage("Localización guardada correctamente.")
         builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()

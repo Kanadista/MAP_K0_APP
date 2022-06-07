@@ -122,6 +122,12 @@ fun UserSavedLocationsDTO.toBO(): UserSavedLocationsBO = UserSavedLocationsBO(
     idLocation ?: -1
 )
 
+fun UserSavedLocationsBO.toDTO(): UserSavedLocationsDTO = UserSavedLocationsDTO(
+    idUser,
+    idLocation
+)
+
+
 fun stringToBitMap(string: String): Bitmap {
     val decodedString: ByteArray = Base64.decode(string, Base64.DEFAULT)
     return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)

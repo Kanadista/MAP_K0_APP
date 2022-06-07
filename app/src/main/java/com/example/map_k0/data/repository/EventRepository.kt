@@ -10,4 +10,8 @@ class EventRepository(private val eventRemoteDataSource : EventRemoteDataSource)
         return eventRemoteDataSource.getRemoteEvents()
     }
 
+    suspend fun createEvent(eventBO: EventBO) {
+        eventRemoteDataSource.createEvent(eventBO)
+    }
+
 }

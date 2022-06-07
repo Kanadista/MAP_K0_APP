@@ -34,7 +34,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MapFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, AddLocationListener {
 
     private lateinit var map: GoogleMap
     private val viewModel: MapVM by viewModels()
@@ -46,6 +46,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback, Goog
         binding = FragmentMapBinding.inflate(layoutInflater, container, false)
         binding?.apply {
             setupDrawerWithFragmentToolbar(locationFragmentToolbarTop)
+
+            helpBtn.setOnClickListener{showHelpAlert()}
         }
         return binding?.root
     }
@@ -128,24 +130,17 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback, Goog
         dialog.show()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MapFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MapFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun showHelpAlert(){
+        val dialogBuilder = AlertDialog.Builder(context)
+        val dialogView = layoutInflater.inflate(R.layout.help_dialog, null)
+        dialogBuilder.setView(dialogView)
+        dialogBuilder.setPositiveButton("Aceptar", null)
+        val alertDialog = dialogBuilder.create()
+        alertDialog.show()
+    }
+
+    override fun locationAdded() {
+        viewModel.loadAllLocations()
     }
 
 

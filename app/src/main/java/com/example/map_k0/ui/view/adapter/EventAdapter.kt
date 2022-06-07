@@ -1,10 +1,12 @@
 package com.example.map_k0.ui.view.adapter
 
 import android.media.metrics.Event
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +15,7 @@ import com.example.map_k0.databinding.*
 import com.example.map_k0.domain.entities.EventBO
 import com.example.map_k0.domain.entities.UserRatingLocationBO
 import com.google.firebase.analytics.FirebaseAnalytics
+import java.time.format.DateTimeFormatter
 
 class EventAdapter() : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEventCallBack) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -70,7 +73,7 @@ class EventAdapter() : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEve
            eventBeneficTitle.text = eventBO.name
             eventBeneficDescription.text = eventBO.description
             eventBeneficAddress.text = eventBO.address
-            eventBeneficDate.text = eventBO.date.toString()
+            eventBeneficDate.text = eventBO.date.toString().substring(0,10)
         }
     }
     }
@@ -83,7 +86,7 @@ class EventAdapter() : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEve
             eventActivismTitle.text = eventBO.name
             eventActivismDescription.text = eventBO.description
             eventActivismAddress.text = eventBO.address
-            eventActivismDate.text = eventBO.date.toString()
+            eventActivismDate.text = eventBO.date.toString().substring(0,10)
         }
     }
 }
@@ -96,7 +99,7 @@ class EventAdapter() : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEve
             eventSportTitle.text = eventBO.name
             eventSportDescription.text = eventBO.description
             eventSportAddress.text = eventBO.address
-            eventSportDate.text = eventBO.date.toString()
+            eventSportDate.text = eventBO.date.toString().substring(0,10)
         }
     }
 }
@@ -110,7 +113,7 @@ class EventAdapter() : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEve
             eventCulturalTitle.text = eventBO.name
             eventCulturalDescription.text = eventBO.description
             eventCulturalAddress.text = eventBO.address
-            eventCulturalDate.text = eventBO.date.toString()
+            eventCulturalDate.text = eventBO.date.toString().substring(0,10)
         }
     }
 }

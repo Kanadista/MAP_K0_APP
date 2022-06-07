@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.SavedLocationsFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/locationFragmentToolbarTop"
+        style="@style/BaseToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/yellow_500" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_saved_location"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:text="@string/hello_blank_fragment" />
+</LinearLayout>

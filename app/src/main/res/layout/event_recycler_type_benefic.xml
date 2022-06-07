@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/green_200"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    >
 
     <ImageView
         android:id="@+id/event_benefic_icon"
@@ -25,12 +26,11 @@
         />
     <TextView
         android:id="@+id/event_benefic_description"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         app:layout_constraintLeft_toRightOf="@id/event_benefic_icon"
-        app:layout_constraintTop_toBottomOf="@id/event_benefic_title"
-        />
+        app:layout_constraintTop_toBottomOf="@id/event_benefic_title"/>
 
     <TextView
         android:id="@+id/event_benefic_address"
@@ -56,12 +56,14 @@
         android:id="@+id/event_benefic_confirm_btn"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:icon="@drawable/ic_baseline_add_circle_24"
-        app:iconGravity="textStart"
         android:backgroundTint="@color/green_200"
-        app:iconSize="100dp"
+        app:icon="@drawable/ic_baseline_person_add_24"
+        app:iconGravity="textStart"
+        app:iconSize="50dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/event_benefic_icon"
-        app:layout_constraintBottom_toBottomOf="@id/event_benefic_icon" />
+        app:layout_constraintBottom_toBottomOf="@id/event_benefic_icon"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

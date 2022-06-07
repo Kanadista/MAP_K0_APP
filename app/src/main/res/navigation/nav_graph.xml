@@ -30,7 +30,11 @@
         android:id="@+id/eventsFragment"
         android:name="com.example.map_k0.ui.fragment.EventsFragment"
         android:label="Eventos"
-        tools:layout="@layout/fragment_events" />
+        tools:layout="@layout/fragment_events">
+        <action
+            android:id="@+id/action_eventFragment_to_addEventFragment"
+            app:destination="@id/addEventFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/authFragment"
         android:name="com.example.map_k0.ui.fragment.AuthFragment"
@@ -54,4 +58,14 @@
         app:argType="string"
         android:defaultValue="-1" />
     </dialog>
+    <dialog
+        android:id="@+id/addEventFragment"
+        android:name="com.example.map_k0.ui.fragment.AddEventFragment"
+        android:label="fragment_add_event"
+        tools:layout="@layout/fragment_add_event" />
+    <fragment
+        android:id="@+id/savedLocationsFragment"
+        android:name="com.example.map_k0.ui.fragment.SavedLocationsFragment"
+        android:label="Guardados"
+        tools:layout="@layout/fragment_saved_locations" />
 </navigation>

@@ -1,8 +1,6 @@
 package com.example.map_k0.domain.entities
 
-import java.time.LocalDate
 import java.util.*
-
 
 data class EventBO (
     val id: Int,

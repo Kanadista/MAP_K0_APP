@@ -2,7 +2,6 @@ package com.example.map_k0.data.remote.entity
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.time.LocalDate
 import java.util.*
 
 

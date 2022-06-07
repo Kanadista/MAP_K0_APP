@@ -8,6 +8,19 @@
     android:background="@color/background_card"
     android:orientation="vertical">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/background_card"
+        app:iconGravity="textStart"
+        app:iconTint="@color/orange_500"
+        app:iconSize="50dp"
+        app:icon="@drawable/ic_baseline_bookmark_orange"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_gravity="center"
         android:id="@+id/detail_image"

@@ -47,12 +47,13 @@ class AddLocationFragment : DialogFragment() {
     private val args: AddLocationFragmentArgs by navArgs()
     private val viewModel: AddLocationVM by viewModels()
     private val viewModelMap : MapVM by viewModels()
-    private val list : LinkedList<Uri> = LinkedList()
+    //private val list : LinkedList<Uri> = LinkedList()
+    private var image : Uri? = null
     private var locationCreated : LocationBO? = null
     private val imageLauncher = registerForActivityResult(StartActivityForResult()){
 
         if (it.resultCode == RESULT_OK) {
-            if (it.data?.getClipData() != null) {
+          /*  if (it.data?.clipData != null) {                 ESTE CÓDIGO FUNCIONARÍA SI LA API DE AZURE RESPONDIESE MÁS RÁPIDO
                 val count: Int = it.data?.getClipData()!!.getItemCount()
                 if(count == 1){
                     list.add(it.data?.getClipData()!!.getItemAt(0).getUri())
@@ -61,7 +62,10 @@ class AddLocationFragment : DialogFragment() {
                         list.add(it.data?.getClipData()!!.getItemAt(i).getUri())
                     }
                 }
-            }
+            } */
+
+            image = it.data?.data
+
         }
     }
 
@@ -84,21 +88,29 @@ class AddLocationFragment : DialogFragment() {
                     )
                     viewModel.createLocation(locationBO)
                     viewModelMap.loadAllLocations()
-                    successfullCreationAlert()
 
                     viewModel.lastLocation.observe(viewLifecycleOwner) {
                         locationCreated = it
-                        insertImages()
+                        insertImages(it)
                     }
             }
+
 
             addImagesBtn.setOnClickListener{
                 val intent = Intent(Intent.ACTION_GET_CONTENT)
                 intent.setType("image/*")
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                 imageLauncher.launch(intent)
             }
         }
+
+        viewModel.created.observe(viewLifecycleOwner){
+            if(it){
+            getListener()?.locationAdded()
+            successfullCreationAlert()
+            dismiss()
+            }
+        }
+
         return binding?.root
     }
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -107,14 +119,29 @@ class AddLocationFragment : DialogFragment() {
         }
 
 
-    private fun insertImages(){
-        list.forEach {
+    private fun insertImages(locationBO: LocationBO){
+        /*list.forEach {   ESTE SERÍA EL CÓDIGO PARA INSERTAR LAS IMAGENES EN LA API SI RESPONDIESE LO SUFICIENTEMENTE RAPIDO
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                val bitmap :Bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(requireContext().contentResolver, it))
                 locationCreated?.let { location ->
                     viewModel.createLocationImage(LocationImageBO(idLocation = location.id, image = bitmap))
                 }
             }
+        } */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        val bitmap :Bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(requireContext().contentResolver, image!!))
+            viewModel.createLocationImage(LocationImageBO(idLocation = locationBO.id, image = bitmap))
+        }
+    }
+
+    private fun getListener(): AddLocationListener? {
+        val targetFragmentIndex = parentFragmentManager.fragments.size - 2
+        val targetFragment = parentFragmentManager.fragments[targetFragmentIndex]
+        return when {
+            targetFragment is AddLocationListener -> targetFragment as AddLocationListener
+            parentFragment is AddLocationListener -> parentFragment as AddLocationListener
+            activity is AddLocationListener -> activity as AddLocationListener
+            else -> null
         }
     }
 
@@ -127,3 +154,8 @@ class AddLocationFragment : DialogFragment() {
         dialog.show()
     }
     }
+
+interface AddLocationListener{
+
+    fun locationAdded()
+}
