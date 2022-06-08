@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.map_k0.R
 import com.example.map_k0.databinding.ActivityMainBinding
@@ -24,6 +25,15 @@ class MainActivity : BaseActivity(){
 
     private var binding: ActivityMainBinding? = null
     private val navController by lazy { getActivityNavController() }
+    private val appBarConfiguration by lazy {
+        AppBarConfiguration(
+            setOf(
+                R.id.mapFragment,
+                R.id.eventsFragment,
+                R.id.savedLocationsFragment,
+            ), getDrawerLayout()
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +42,11 @@ class MainActivity : BaseActivity(){
     }
 
    override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController, binding?.root)
-                || super.onSupportNavigateUp()
+       return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
+
+    override fun getAppBarConfigurationActivity(): AppBarConfiguration =
+        appBarConfiguration
 
     override fun getActionBarBase(): ActionBar? = supportActionBar
 

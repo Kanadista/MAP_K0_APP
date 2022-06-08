@@ -55,6 +55,9 @@ interface MapK0APIService {
 
     @GET("Users/{id}")
     suspend fun getUserById() : Response<EventDTO>
+
+    @POST("Users")
+    suspend fun createUser(@Body userDTO: UserDTO)
     //endregion
 
     //region Event_Assistance
@@ -66,7 +69,7 @@ interface MapK0APIService {
     suspend fun  getEventAssistanceById(@Path("id") id: Int) : Response<EventAssistanceDTO>
 
     @POST("EventAssistance")
-    suspend fun createEventAssistance(@Body eventAssistanceDTO: EventAssistanceDTO) : Response<Int>
+    suspend fun createEventAssistance(@Body eventAssistanceDTO: EventAssistanceDTO)
 
     //endregion
 
@@ -155,19 +158,21 @@ interface MapK0APIService {
             }
         }
 
+        //https://mapk0api.azurewebsites.net/
+        //https://localhost:3001/
 
-        private const val MAPK0_API_BASE_URL = "https://mapk0api.azurewebsites.net/api/"
 
         fun getAPIService(): MapK0APIService =
             getRetrofit().create(MapK0APIService::class.java)
 
         private val moshiBuilder = Moshi.Builder().add(CustomDateAdapter())
 
+        private const val MAPK0_API_BASE_URL = "https://mapk0api.azurewebsites.net/api/"
         private fun getRetrofit(): Retrofit =
             Retrofit.Builder()
                 .baseUrl(MAPK0_API_BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create(moshiBuilder.build()))
-               // .client(getUnsafeOkHttpClient())
+                //.client(getUnsafeOkHttpClient())  //Esto lo uso en caso de que quiera debugear en local
                 .build()
     }
 

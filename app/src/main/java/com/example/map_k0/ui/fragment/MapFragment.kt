@@ -8,16 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.map_k0.R
 import com.example.map_k0.databinding.FragmentMapBinding
 import com.example.map_k0.databinding.LocationDetailsBinding
 import com.example.map_k0.domain.entities.LocationBO
 import com.example.map_k0.ui.view.base.BaseFragment
 import com.example.map_k0.ui.viewmodel.MapVM
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMapOptions
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
@@ -38,11 +36,14 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback, Goog
 
     private lateinit var map: GoogleMap
     private val viewModel: MapVM by viewModels()
+    private val args : MapFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         binding = FragmentMapBinding.inflate(layoutInflater, container, false)
         binding?.apply {
             setupDrawerWithFragmentToolbar(locationFragmentToolbarTop)
@@ -66,6 +67,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback, Goog
         map = mapaCreado
         setupObservers(map)
         viewModel.loadAllLocations()
+
+        if(args.latitude != "-1" && args.longitud != "-1"){
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(args.latitude.toDouble(), args.longitud.toDouble()), 90F))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

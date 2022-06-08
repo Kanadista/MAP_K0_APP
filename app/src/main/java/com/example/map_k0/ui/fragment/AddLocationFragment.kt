@@ -25,7 +25,9 @@ import java.util.*
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.os.Build
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.map_k0.R
 import com.example.map_k0.domain.entities.LocationImageBO
 import kotlinx.coroutines.launch
 import java.lang.Thread.sleep
@@ -77,7 +79,9 @@ class AddLocationFragment : DialogFragment() {
 
         binding?.apply {
             addButton.setOnClickListener {
-
+                    createAnimation.visibility = View.VISIBLE
+                    cardViewAnimation.visibility = View.VISIBLE
+                    addLinear.setBackgroundColor(ContextCompat.getColor(context!!, R.color.loading_gray))
                     val locationBO = LocationBO(
                         0,
                         addTitleInputEditText.text.toString(),
@@ -95,7 +99,6 @@ class AddLocationFragment : DialogFragment() {
                     }
             }
 
-
             addImagesBtn.setOnClickListener{
                 val intent = Intent(Intent.ACTION_GET_CONTENT)
                 intent.setType("image/*")
@@ -106,6 +109,8 @@ class AddLocationFragment : DialogFragment() {
         viewModel.created.observe(viewLifecycleOwner){
             if(it){
             getListener()?.locationAdded()
+                binding?.createAnimation?.visibility = View.GONE
+                binding?.cardViewAnimation?.visibility = View.GONE
             successfullCreationAlert()
             dismiss()
             }

@@ -12,22 +12,24 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.map_k0.R
 import com.example.map_k0.databinding.*
+import com.example.map_k0.domain.entities.EventAssistanceBO
 import com.example.map_k0.domain.entities.EventBO
+import com.example.map_k0.domain.entities.LocationBO
 import com.example.map_k0.domain.entities.UserRatingLocationBO
 import com.google.firebase.analytics.FirebaseAnalytics
 import java.time.format.DateTimeFormatter
 
-class EventAdapter() : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEventCallBack) {
+class EventAdapter(private val onClickListener : (EventBO) -> Unit) : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEventCallBack) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 
         return when (viewType){
-            0 -> EventBeneficViewHolder(layoutInflater.inflate(R.layout.event_recycler_type_benefic, parent, false))
-            1 -> EventSportViewHolder(layoutInflater.inflate(R.layout.event_recycler_type_sport, parent, false))
-            2 -> EventCulturalViewHolder(layoutInflater.inflate(R.layout.event_recycler_type_cultural,parent, false))
-            3 -> EventActivismViewHolder(layoutInflater.inflate(R.layout.event_recycler_type_activism, parent, false))
+            0 -> EventBeneficViewHolder(layoutInflater.inflate(R.layout.event_recycler_type_benefic, parent, false), onClickListener)
+            1 -> EventSportViewHolder(layoutInflater.inflate(R.layout.event_recycler_type_sport, parent, false), onClickListener)
+            2 -> EventCulturalViewHolder(layoutInflater.inflate(R.layout.event_recycler_type_cultural,parent, false), onClickListener)
+            3 -> EventActivismViewHolder(layoutInflater.inflate(R.layout.event_recycler_type_activism, parent, false), onClickListener)
             else -> {
-                EventBeneficViewHolder(layoutInflater.inflate(R.layout.event_recycler_type_benefic, parent, false)) // Esto aqui no pinta nada
+                EventBeneficViewHolder(layoutInflater.inflate(R.layout.event_recycler_type_benefic, parent, false), onClickListener) // Esto aqui no pinta nada
             }
         }
 
@@ -65,7 +67,7 @@ class EventAdapter() : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEve
         oldItem == newItem
     }
 
-    class EventBeneficViewHolder(view : View) : RecyclerView.ViewHolder(view){
+    class EventBeneficViewHolder(view : View, private val onClickListener : (EventBO) -> Unit) : RecyclerView.ViewHolder(view){
     private val binding = EventRecyclerTypeBeneficBinding.bind(view)
 
     fun bind(eventBO: EventBO){
@@ -74,11 +76,12 @@ class EventAdapter() : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEve
             eventBeneficDescription.text = eventBO.description
             eventBeneficAddress.text = eventBO.address
             eventBeneficDate.text = eventBO.date.toString().substring(0,10)
+            eventBeneficConfirmBtn.setOnClickListener { onClickListener(eventBO) }
         }
     }
     }
 
-    class EventActivismViewHolder(view : View) : RecyclerView.ViewHolder(view){
+    class EventActivismViewHolder(view : View, private val onClickListener : (EventBO) -> Unit) : RecyclerView.ViewHolder(view){
     private val binding = EventRecyclerTypeActivismBinding.bind(view)
 
     fun bind(eventBO: EventBO){
@@ -87,11 +90,12 @@ class EventAdapter() : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEve
             eventActivismDescription.text = eventBO.description
             eventActivismAddress.text = eventBO.address
             eventActivismDate.text = eventBO.date.toString().substring(0,10)
+            eventActivismConfirmBtn.setOnClickListener { onClickListener(eventBO) }
         }
     }
 }
 
-    class EventSportViewHolder(view : View) : RecyclerView.ViewHolder(view){
+    class EventSportViewHolder(view : View, private val onClickListener : (EventBO) -> Unit) : RecyclerView.ViewHolder(view){
     private val binding = EventRecyclerTypeSportBinding.bind(view)
 
     fun bind(eventBO: EventBO){
@@ -100,12 +104,13 @@ class EventAdapter() : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEve
             eventSportDescription.text = eventBO.description
             eventSportAddress.text = eventBO.address
             eventSportDate.text = eventBO.date.toString().substring(0,10)
+            eventSportConfirmBtn.setOnClickListener { onClickListener(eventBO) }
         }
     }
 }
 
 
-    class EventCulturalViewHolder(view : View) : RecyclerView.ViewHolder(view){
+    class EventCulturalViewHolder(view : View, private val onClickListener : (EventBO) -> Unit) : RecyclerView.ViewHolder(view){
     private val binding = EventRecyclerTypeCulturalBinding.bind(view)
 
     fun bind(eventBO: EventBO){
@@ -114,6 +119,7 @@ class EventAdapter() : ListAdapter<EventBO, RecyclerView.ViewHolder>(DiffUtilEve
             eventCulturalDescription.text = eventBO.description
             eventCulturalAddress.text = eventBO.address
             eventCulturalDate.text = eventBO.date.toString().substring(0,10)
+            eventCulturalConfirmBtn.setOnClickListener { onClickListener(eventBO) }
         }
     }
 }

@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.map_k0.R
 import com.example.map_k0.databinding.FragmentEventsBinding
+import com.example.map_k0.domain.entities.EventAssistanceBO
 import com.example.map_k0.ui.view.adapter.EventAdapter
 import com.example.map_k0.ui.view.base.BaseFragment
 import com.example.map_k0.ui.viewmodel.EventsVM
@@ -25,7 +26,11 @@ import kotlinx.coroutines.NonDisposableHandle.parent
 class EventsFragment : BaseFragment<FragmentEventsBinding>(), AddEventListener {
 
     private val viewModel: EventsVM by viewModels()
-    private val adapter by lazy { EventAdapter() }
+    private val adapter by lazy { EventAdapter(onClickListener = {
+        if (FirebaseAuth.getInstance().currentUser != null) {
+        viewModel.createEventAssistance(EventAssistanceBO(it.id, FirebaseAuth.getInstance().uid.toString()))
+        }
+    })}
 
 
     override fun onCreateView(

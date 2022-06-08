@@ -89,14 +89,20 @@ fun LocationImageBO.toDTO(): LocationImageSendingDTO = LocationImageSendingDTO(
 //MAPPER FOR USERS
 fun UserDTO.toBO(): UserBO = UserBO(
     id ?:  "-1",
-    nickName ?: "",
+    email ?: "",
     firstName ?: "",
     lastName ?: "",
     address ?: "",
-    (profilePic ?: null)!!,
-    level ?: -1,
-    levelxp ?: -1
 )
+
+fun UserBO.toDTO(): UserDTO = UserDTO(
+    id,
+    email,
+    firstName,
+    lastName,
+    address
+)
+
 
 //MAPPER FOR USER RATING LOCATIONS
 

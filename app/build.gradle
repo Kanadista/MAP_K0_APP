@@ -90,4 +90,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-common-java8:2.4.1")
     // optional - ReactiveStreams support for LiveData
     implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.4.1")
+    def lottieVersion = "5.2.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }

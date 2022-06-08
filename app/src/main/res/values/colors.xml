@@ -22,6 +22,8 @@
     <color name="yellow_300">#FFE94E</color>
     <color name="yellow_400">#FFE246</color>
     <color name="yellow_500">#FFDA3D</color>
+    <color name="loading_gray">#C8C8C9</color>
+
 
 
 </resources>

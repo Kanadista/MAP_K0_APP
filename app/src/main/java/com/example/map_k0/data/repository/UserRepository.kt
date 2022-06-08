@@ -8,4 +8,8 @@ class UserRepository (private val userRemoteDataSource : UserRemoteDataSource){
     suspend fun getUsers() : List<UserBO>{
         return userRemoteDataSource.getRemoteUsers()
     }
+
+    suspend fun createUser(userBO: UserBO){
+        userRemoteDataSource.createUser(userBO)
+    }
 }

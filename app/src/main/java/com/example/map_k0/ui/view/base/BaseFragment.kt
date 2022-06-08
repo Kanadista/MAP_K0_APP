@@ -24,11 +24,11 @@ abstract class BaseFragment<TypeBinding : ViewBinding> : Fragment() {
     }
 
     protected fun setupDrawerWithFragmentToolbar(toolbar: Toolbar?){
-        val navControler = findNavController()
+        val navController = findNavController()
         (requireActivity() as BaseActivity).apply {
             setSupportActionBar(toolbar)
-            getNavDrawer()?.setupWithNavController(navControler)
-            NavigationUI.setupActionBarWithNavController(this, navControler, getDrawerLayout())
+            getNavDrawer()?.setupWithNavController(navController)
+            NavigationUI.setupActionBarWithNavController(this, navController, getAppBarConfigurationActivity())
         }
     }
 }

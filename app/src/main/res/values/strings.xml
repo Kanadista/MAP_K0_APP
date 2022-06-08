@@ -25,4 +25,6 @@
     <string name="help_description">Una aplicación destinada a potenciar la convencia vecinal en los barrios ofreciendo la posibilidad de recopilar los intereses del mismo en una sola aplicación.</string>
     <string name="help_tutorial">Podrás crear una localización dejando pulsado en una parte del mapa.</string>
     <string name="help_reminder">Recuerda que deberás registrarte para poder crear localizaciones.</string>
+    <string name="map_k0">MAP K0</string>
+    <string name="header_description">Desarrollado por: \n Sebastián Forte López</string>
 </resources>

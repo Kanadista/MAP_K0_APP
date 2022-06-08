@@ -28,6 +28,7 @@ class DetailDialogFragment : DialogFragment() {
     private var locationWithRatingsAndImage: LocationWithRatingsAndImage? = null
     private var savedList : List<UserSavedLocationsBO>? = null
     private val adapter by lazy { RatingAdapter() }
+    private var saved : Boolean = false
     private lateinit var imageAdapter : LocationImageAdapter
 
     override fun onCreateView(
@@ -68,7 +69,7 @@ class DetailDialogFragment : DialogFragment() {
 
             saveButton.setOnClickListener{
                 if(FirebaseAuth.getInstance().currentUser != null) {
-                    if(savedList?.any{ it.idLocation == args.locationId}!!){
+                    if(savedList?.any{ it.idLocation == args.locationId}!! || saved){
                         showAlreadySavedAlert()
                     }else {
                         viewModel.createUserSavingLocation(
@@ -77,6 +78,7 @@ class DetailDialogFragment : DialogFragment() {
                                 args.locationId
                             )
                         )
+                        saved = true
                         showLocationSavedAlert()
                     }
                 }else{

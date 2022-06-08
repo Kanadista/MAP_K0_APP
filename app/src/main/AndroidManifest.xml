@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.map_k0">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -17,7 +18,8 @@
         android:theme="@style/Theme.MAP_K0">
         <activity
             android:name=".ui.view.activity.AuthActivity"
-            android:exported="true" />
+            android:exported="true"
+            tools:ignore="MissingClass" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
